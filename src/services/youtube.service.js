@@ -157,30 +157,16 @@ const getHomeData = async ({ pageToken } = {}) => {
 const searchYouTube = async ({ query, pageToken }) => {
   const params = {
     part: "snippet",
-    q: `${query} song`,
+    q: query,
     type: "video",
-    videoCategoryId: MUSIC_CATEGORY_ID,
-    regionCode: YOUTUBE_REGION,
-    maxResults: String(MAX_RESULTS),
+    maxResults: "20",
   };
 
   if (pageToken) {
     params.pageToken = pageToken;
   }
 
-  const data = await youtubeRequest("search", params);
-
-  await saveSongsToDatabase(data.items || []);
-
-  const songs = (data.items || [])
-    .map(normalizeYouTubeSearchResult)
-    .filter(Boolean);
-
-  return {
-    songs,
-    nextPageToken: data.nextPageToken || null,
-    prevPageToken: data.prevPageToken || null,
-  };
+  return youtubeRequest("search", params);
 };
 
 const getCategorySongs = async ({ category, pageToken }) => {
