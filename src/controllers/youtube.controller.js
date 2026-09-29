@@ -42,7 +42,7 @@ const search = async (req, res, next) => {
       success: true,
       message: "YouTube search successful",
       data: {
-        items: data.items || [],
+        items: data.songs || [],
         nextPageToken: data.nextPageToken || null,
         prevPageToken: data.prevPageToken || null,
       },
